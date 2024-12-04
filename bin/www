@@ -28,7 +28,7 @@ var server = http.createServer(app);
 
 const connectDB = async () => {
   try {
-    await mongoose.connect("mongodb://localhost:27017/e-commerce");
+    await mongoose.connect("mongodb+srv://afham:QwoXkQgnvmXchXe2@cluster0.vrx1g.mongodb.net/e-commerce?retryWrites=true&w=majority&appName=Cluster0");
     console.log('MongoDB connected');
     server.listen(port);
   server.on('error', onError);

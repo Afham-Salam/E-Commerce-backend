@@ -30,6 +30,9 @@ app.use('/users', usersRouter);
 app.use('/api/auth/',require("./routes/auth"))
 app.use('/api/product/',require("./routes/product"))
 app.use('/api/cart/',require("./routes/cart"))
+app.use('/api/order/',require("./routes/order"))
+app.use('/api/favourite/',require("./routes/favourite"))
+app.use('/api/user/',require("./routes/users"))
 app.use(auth);
 
 // catch 404 and forward to error handler

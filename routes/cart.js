@@ -53,6 +53,7 @@ router.get("/get/:userId", async (req, res) => {
   }
 });
 
+
 // Update quantity of a product in the cart
 router.put("/update/:userId", async (req, res) => {
   const { userId } = req.params;
@@ -66,8 +67,9 @@ router.put("/update/:userId", async (req, res) => {
       return res.status(404).json({ message: "Cart not found" });
     }
 
-    const product = cart.products.find((p) => p.productId === productId);
-    console.log()
+    const product = cart.products.find((p) => p.productId.toString() === productId);
+   
+    
     if (product) {
       product.quantity = quantity;
       await cart.save();
@@ -90,7 +92,9 @@ router.delete("/remove/:userId", async (req, res) => {
     if (!cart) {
       return res.status(404).json({ message: "Cart not found" });
     }
-    cart.products = cart.products.filter((p) =>p.productId !== productId);
+    cart.products = cart.products.filter(
+      (p) => p.productId.toString() !== productId);
+      console.log(cart.products)
     await cart.save();
     res.status(500).json({  message: 'Product removed from cart', error });
 

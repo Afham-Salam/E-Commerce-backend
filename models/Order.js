@@ -1,7 +1,7 @@
 
 const mongoose=require("mongoose")
 
-const orderScehme=new mongoose.Scehme({
+const orderScehme=new mongoose.Schema({
         userId:{
             type:mongoose.Schema.Types.ObjectId,
             ref:'User',
@@ -53,5 +53,5 @@ const orderScehme=new mongoose.Scehme({
         
         },{timestamps: true})
 
-      const Order=mongoose.modal("Order",orderScehme)
-      modules.exports=Order;
+      const Order=mongoose.model("Order",orderScehme)
+      module.exports=Order;

@@ -23,6 +23,8 @@ router.get("/get", async (req, res) => {
   }
 });
 
+//get by id
+
 router.get("/get/:productId", async (req, res) => {
   const { productId } = req.params;
   try {
@@ -58,10 +60,10 @@ router.put("/edit/:productId", async (req, res) => {
 //delete product
 router.delete("/delete/:productId", async (req, res) => {
   const { productId } = req.params;
-
+  console.log({productId});
+  
   try {
     const product = await Product.findByIdAndDelete(productId);
-
     if (!product) {
       return res.status(404).json({ message: "Product not found" });
     }

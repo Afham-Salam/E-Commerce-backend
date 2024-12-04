@@ -52,72 +52,30 @@ router.post("/create", async (req, res) => {
     }
   });
 
+  //get order based on user
 
-
-
-
-
-
-
-
-//edit order
-
-  router.put("/edit/:id", async (req, res) => {
-    const { id } = req.params;
-    const {
-      products,
-      totalAmount,
-      totalItems,
-      customerName,
-      address,
-      city,
-      state,
-      pincode,
-      contact
-    } = req.body;
+  router.get("/get/:userId", async (req, res) => {
+    const { userId } = req.params;
   
     try {
-      const order = await Order.findById(id);
+      const userOrders = await Order.find({ userId })
+        .populate("userId")
+        .populate("products.productId");
   
-      if (!order) {
-        return res.status(404).json({ message: "Order not found" });
+      if (userOrders.length === 0) {
+        return res.status(404).json({ message: "No orders found for this user" });
       }
   
-      order.products = products || order.products;
-      order.totalAmount = totalAmount || order.totalAmount;
-      order.totalItems = totalItems || order.totalItems;
-      order.customerName = customerName || order.customerName;
-      order.address = address || order.address;
-      order.city = city || order.city;
-      order.state = state || order.state;
-      order.pincode = pincode || order.pincode;
-      order.contact = contact || order.contact;
-  
-      await order.save();
-      res.status(200).json({ message: "Order updated successfully", order });
+      res.status(200).json({ message: "Orders fetched successfully", orders: userOrders });
     } catch (error) {
-      res.status(500).json({ message: "Error updating order", error });
+      res.status(500).json({ message: "Error fetching user's orders", error });
     }
   });
-  
-
- 
 
 
-  //delete order
 
-  router.delete("/:id", async (req, res) => {
-    const { id } = req.params;
+
   
-    try {
-      const order = await Order.findByIdAndDelete(id);
-  
-      if (!order) {
-        return res.status(404).json({ message: "Order not found" });
-      }
-  
-      res.status(200).json({ message: "Order deleted successfully" });
-    } catch (error) {
-      res.status(500).json({ message: "Error deleting order", error });
-    }
-  });
+
+
+  module.exports = router;
