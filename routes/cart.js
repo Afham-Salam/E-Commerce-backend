@@ -39,7 +39,7 @@ router.get("/get/:userId", async (req, res) => {
   const { userId } = req.params;
 
   try {
-    const cart = await Cart.findOne({ userId });
+    const cart = await Cart.findOne({ userId }).populate("products.productId");
 
     if (!cart) {
       return res
