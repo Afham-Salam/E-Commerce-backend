@@ -7,6 +7,7 @@ const bcrypt = require('bcrypt');
 
 
 // Register
+
 router.post("/register", async (req, res) => {
   try {
     const { name, email, password } = req.body;
@@ -14,12 +15,15 @@ router.post("/register", async (req, res) => {
     // Check if the email already exists
     const existingUser = await User.findOne({ email });
     if (existingUser) {
-      return res.status(400).json({ error: "Email is already in use" });
+      return res
+        .status(400)
+        .json({ success: false, message: "User already exists. Please login instead." });
     }
 
+    // Hash the password
     const hashedPassword = await bcrypt.hash(password, 8);
 
-
+    // Create and save the new user
     const newUser = new User({ name, email, password: hashedPassword });
     await newUser.save();
 
@@ -27,7 +31,7 @@ router.post("/register", async (req, res) => {
     const token = jwt.sign(
       { id: newUser._id, email: newUser.email },
       process.env.JWT_SECRET,
-      { expiresIn: '1h' }
+      { expiresIn: "1h" }
     );
 
     const userResponse = {
@@ -37,13 +41,18 @@ router.post("/register", async (req, res) => {
       createdAt: newUser.createdAt,
     };
 
+    // Send success response
     res.status(201).json({
-      message: "User registration successful",
+      success: true,
+      message: "User registration successful.",
       user: userResponse,
       token: token,
     });
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    res.status(500).json({
+      success: false,
+      message: "An error occurred during registration. Please try again.",
+    });
   }
 });
 
@@ -67,6 +76,7 @@ router.post("/login", async (req, res) => {
     );
 
     res.json({
+      message:"Login Successfully",
       token: token,
       user: {
         name: user.name,
