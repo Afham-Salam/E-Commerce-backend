@@ -16,7 +16,7 @@ router.get('/all', async function (req, res) {
 
 //current user
 
-router.get('/me', async function (req, res) {
+router.get('/me/:id', async function (req, res) {
   try {
     const users = await User.findById(req.user.userId); 
     if (!users) {
