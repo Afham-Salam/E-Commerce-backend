@@ -26,9 +26,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 //Define routes
 
 app.use('/', indexRouter);
-app.use(auth);
 app.use('/users', usersRouter);
 app.use('/api/auth/',require("./routes/auth"))
+app.use(auth);
 app.use('/api/product/',require("./routes/product"))
 app.use('/api/cart/',require("./routes/cart"))
 app.use('/api/order/',require("./routes/order"))
