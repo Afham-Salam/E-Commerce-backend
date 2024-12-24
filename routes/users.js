@@ -1,5 +1,6 @@
 var express = require('express');
 const User = require('../models/User');
+const { auth } = require('../middleware/authmiddleware');
 var router = express.Router();
 
 /* GET users listing. */
@@ -15,8 +16,7 @@ router.get('/all', async function (req, res) {
 });
 
 //current user
-
-router.get('/me/:id', async function (req, res) {
+router.get('/me', auth, async function (req, res) {
   try {
     const users = await User.findById(req.user.userId); 
     if (!users) {
