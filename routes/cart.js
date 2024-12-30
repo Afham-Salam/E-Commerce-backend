@@ -120,9 +120,6 @@ router.delete("/remove/:userId", async (req, res) => {
   }
 });
 
-
-
-
 // Increment Quantity
 router.put("/increment/:userId", async (req, res) => {
   const { userId } = req.params;
