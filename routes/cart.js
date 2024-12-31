@@ -103,19 +103,18 @@ router.delete("/remove/:userId", async (req, res) => {
 
     // Filter the products to remove the one with the given productId
     cart.products = cart.products.filter(
-      (product) => product.productId.toString() !== productId
+      (product) => product.productId.toString() !== productId.toString()
     );
 
-    console.log(cart.products); // Debugging line to see if the products are being filtered
-
-    // Save the updated cart
+    console.log(cart.products); 
+   
     await cart.save();
 
-    // Return success response
+
     res.status(200).json({ message: 'Product removed from cart' });
 
   } catch (error) {
-    console.error("Error removing product from cart:", error); // Log the error for debugging
+    console.error("Error removing product from cart:", error); 
     res.status(500).json({ message: "Error removing product from cart", error: error.message });
   }
 });
